@@ -33,7 +33,7 @@ Cara menjalankan:
 
 2. Jalankan
 
-        mvn clean spring:boot run
+        mvn clean spring-boot:run
 
 3. Coba akses konfigurasi aplikasi `catalog` dengan profile `testing`
 
@@ -71,7 +71,7 @@ Cara menjalankan:
 
 5. Bila `spring.datasource.password` tidak terdekripsi, jalankan `config-server` dengan environment variable `ENCRYPT_KEY`
 
-        ENCRYPT_KEY=inisymmetrickeyrahasiasekali mvn clean spring:boot run
+        ENCRYPT_KEY=inisymmetrickeyrahasiasekali mvn clean spring-boot:run
 
 6. Bila mendapatkan output seperti dibawah ini, pastikan kita sudah menginstal Java Cryptography Extension seperti dijelaskan [di sini](http://stackoverflow.com/a/6481658)
 
