@@ -9,6 +9,8 @@ spring:
     jackson:
         serialization:
             indent_output: true
+    application:
+        name: config
     cloud:
         config:
             server:
@@ -17,3 +19,8 @@ spring:
                     searchPaths: 'config, config/{application}'
                     cloneOnStart: true
                     basedir: 'target/config'
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:10001/eureka/,http://localhost:10002/eureka/
