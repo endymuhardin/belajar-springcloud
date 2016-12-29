@@ -17,7 +17,7 @@ Keterangan:
 
 * folder config : repository config yang akan dibaca oleh Config Server
 * config-server : microservice yang menghosting semua konfigurasi service lain
-* service-registry : microservice yang bertugas untuk menyimpan daftar semua service. Terdiri dari 2 instance untuk keperluan failover
+* discovery-service : microservice yang bertugas untuk menyimpan daftar semua service. Terdiri dari 2 instance untuk keperluan failover
 * catalog-service : microservice untuk menyediakan REST API daftar produk dan informasi produk
 * catalog-web : aplikasi web yang menggunakan `catalog-service` untuk menampilkan daftar produk dalam format HTML/website
 * reverse-proxy : microservice untuk menjadi pintu masuk semua request, kemudian mem-forward request ke service yang berwenang
@@ -26,4 +26,4 @@ Keterangan:
 ## Referensi ##
 
 * http://www.kennybastani.com/2016/04/event-sourcing-microservices-spring-cloud.html
-
+* https://www.youtube.com/watch?v=cCEvFDhe3os
