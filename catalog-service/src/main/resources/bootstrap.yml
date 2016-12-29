@@ -3,6 +3,12 @@ spring:
         name: catalog
     cloud:
         config:
-            uri: http://localhost:8888
+            discovery:
+                enabled: true
+                serviceId: config
     profiles:
         active: testing
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:10001/eureka/,http://localhost:10002/eureka/
