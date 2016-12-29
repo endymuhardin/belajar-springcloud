@@ -1,0 +1,15 @@
+server:
+    port: 8888
+
+spring:
+    jackson:
+        serialization:
+            indent_output: true
+    cloud:
+        config:
+            server:
+                git:
+                    uri: https://github.com/endymuhardin/belajar-springcloud.git
+                    searchPaths: 'config, config/{application}'
+                    cloneOnStart: true
+                    basedir: 'target/config'
