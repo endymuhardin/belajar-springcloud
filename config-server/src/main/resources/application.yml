@@ -1,6 +1,10 @@
 server:
     port: 8888
 
+# Harusnya diset sebagai environment variabel ENCRYPT_KEY
+# encrypt:
+#    key: inisymmetrickeyrahasiasekali
+
 spring:
     jackson:
         serialization:
