@@ -101,6 +101,10 @@ Cara menjalankan:
 
         59e78e6f57c36a0e2347cf1f68ae7772594e1f77b3cb2bb358baf447cd304eda 
 
+10. Nilai tersebut bisa kita pasang di file konfigurasi seperti ini
+
+        password: {cipher}59e78e6f57c36a0e2347cf1f68ae7772594e1f77b3cb2bb358baf447cd304eda
+
 ## Referensi ##
 
 * http://www.kennybastani.com/2016/04/event-sourcing-microservices-spring-cloud.html
