@@ -105,6 +105,65 @@ Cara menjalankan:
 
         password: {cipher}59e78e6f57c36a0e2347cf1f68ae7772594e1f77b3cb2bb358baf447cd304eda
 
+## Discovery Service ##
+
+Ini adalah aplikasi yang menyimpan database berisi semua nama aplikasi dan lokasinya (host dan port). Ada beberapa implementasi discovery services, antara lain:
+
+* Eureka
+* Consul
+* etcd
+* Zookeeper
+
+Tapi pada contoh ini, kita gunakan Eureka yang supportnya paling lengkap di Spring Boot. Lagipula, Consul dan Zookeeper membutuhkan instalasi aplikasi secara standalone, sehingga ribet setupnya. Eureka bisa dijalankan embedded dalam Spring Boot.
+
+Eureka ingin dijalankan dengan lebih dari satu instance. Tujuannya supaya kalau satu node mati, masih ada cadangan. Bila kita tetap nekat menjalankan satu instance, bisa jalan tapi lognya berisik. Setiap sekian detik dia menampilkan pesan error karena tidak ketemu node lain.
+
+Untuk itu, kita buat dua profile supaya satu aplikasi ini bisa dijalankan menjadi dua instance, yang satu jalan di port `10001`, satu lagi jalan di port `10002`.
+
+Berikut cara menjalankan instance pertama:
+
+        SPRING_PROFILES_ACTIVE=discovery1 mvn spring-boot:run
+
+Dan berikut perintah untuk menjalankan instance kedua:
+
+        SPRING_PROFILES_ACTIVE=discovery2 mvn spring-boot:run
+
+Setelah keduanya jalan, kita bisa lihat service mana saja yang terdaftar dengan mengakses ke `http://localhost:10001/`
+
+## Catalog Service ##
+
+Pada saat dijalankan, aplikasi ini:
+
+1. Menghubungi `discovery service` untuk mendaftarkan diri dan mencari `config server`
+2. Menghubungi `config server` untuk mendapatkan konfigurasi
+3. Barulah menjalankan diri sendiri
+
+Untuk menjalankan aplikasi ini, tidak ada yang istimewa, langsung saja
+
+        mvn clean spring-boot:run
+
+Kemudian browse ke `http://localhost:30001/halo`. Kita akan mendapatkan output sebagai berikut:
+
+```js
+{
+  "nama" : "Development User",
+  "waktu" : "Fri Dec 30 00:41:00 WIB 2016"
+}
+```
+
+Untuk mengetes apakah konfigurasi berjalan sempurna, kita bisa coba jalankan profile `testing` dengan cara mengeset environment variable `SPRING_PROFILES_ACTIVE` seperti ini
+
+        SPRING_PROFILES_ACTIVE=testing mvn clean spring-boot:run
+
+Harusnya `catalog service` akan menjalankan konfigurasi profile `testing` sehingga variabel `nama` akan berisi `Test User` seperti ini
+
+```js
+{
+  "nama" : "Test User",
+  "waktu" : "Fri Dec 30 00:43:47 WIB 2016"
+}
+```
+
 ## Referensi ##
 
 * http://www.kennybastani.com/2016/04/event-sourcing-microservices-spring-cloud.html
