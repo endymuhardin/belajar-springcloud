@@ -84,7 +84,22 @@ Cara menjalankan:
           "path" : "/encrypt"
         }
 
-7. Selanjutnya, `config-server` ini seharusnya kita deploy ke cloud service seperti Heroku supaya mendapatkan hostname yang permanen. Soalnya nanti semua aplikasi lain akan mengambil konfigurasi dari `config-server` ini.
+7. Sedangkan bila mendapatkan error seperti ini, berarti kita tidak memasang symmetric key dengan benar.
+
+        {
+          "description" : "No key was installed for encryption service",
+          "status" : "NO_KEY"
+        }
+
+8. Selanjutnya, `config-server` ini seharusnya kita deploy ke cloud service seperti Heroku supaya mendapatkan hostname yang permanen. Soalnya nanti semua aplikasi lain akan mengambil konfigurasi dari `config-server` ini.
+
+9. Bila ingin mengenkrip suatu nilai, misalnya `1234`, kita bisa menggunakan endpoint `/encrypt` seperti ini
+
+        curl http://localhost:8888/encrypt -d 1234
+
+   dan mendapatkan hasil seperti ini
+
+        59e78e6f57c36a0e2347cf1f68ae7772594e1f77b3cb2bb358baf447cd304eda 
 
 ## Referensi ##
 
