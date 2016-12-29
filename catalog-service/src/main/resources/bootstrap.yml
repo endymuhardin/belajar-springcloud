@@ -6,8 +6,9 @@ spring:
             discovery:
                 enabled: true
                 serviceId: config
-    profiles:
-        active: testing
+#    profiles:
+#        active: testing
+
 eureka:
     client:
         serviceUrl:
