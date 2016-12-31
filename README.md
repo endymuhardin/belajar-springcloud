@@ -21,9 +21,20 @@ Aplikasi lengkap akan terdiri dari beberapa microservices, antara lain:
 * folder config : repository config yang akan dibaca oleh Config Server
 * config-server : microservice yang menghosting semua konfigurasi service lain
 * catalog-service : microservice untuk menyediakan REST API daftar produk dan informasi produk
-* catalog-web : aplikasi web yang menggunakan `catalog-service` untuk menampilkan daftar produk dalam format HTML/website
+* catalog-webapp : aplikasi web yang menggunakan `catalog-service` untuk menampilkan daftar produk dalam format HTML/website
 * api-gateway : microservice untuk menjadi pintu masuk semua request, kemudian mem-forward request ke service yang berwenang
 * auth-service : microservice untuk login
+
+Urutan development:
+
+1. Implement discovery service
+2. Implement config server
+3. Implement catalog service
+4. Implement catalog webapp
+5. Implement security
+6. Implement shopping cart
+7. Implement merchant service
+8. Implement merchant webapp
 
 Urutan deployment:
 
