@@ -1,0 +1,6 @@
+server:
+    port: 10000
+
+# Harusnya diset sebagai environment variabel ENCRYPT_KEY
+# encrypt:
+#    key: inisymmetrickeyrahasiasekali

@@ -2,3 +2,8 @@ spring:
     jackson:
         serialization:
             indent_output: true
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:10001/eureka/,http://localhost:10002/eureka/
