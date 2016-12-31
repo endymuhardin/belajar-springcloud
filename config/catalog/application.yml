@@ -1,7 +1,1 @@
-spring:
-    datasource:
-        url: 'jdbc:mysql://localhost/belajar'
-        username: 'belajar'
-        password: '{cipher}9602026ea4db479b74f9846870326dc6f5f4fb76050d4961bc03fe9afebd1a96a85d82bdb58258c6532fbc90e1ad5b34'
-
 nama: Development User
