@@ -1,6 +1,3 @@
-server:
-    port: 30001
-
 spring:
     datasource:
         url: 'jdbc:mysql://localhost/belajar'
