@@ -187,6 +187,28 @@ Cara menjalankan:
 
         password: {cipher}59e78e6f57c36a0e2347cf1f68ae7772594e1f77b3cb2bb358baf447cd304eda
 
+## Catalog Service ##
+
+Berisi REST API untuk mendapatkan daftar produk dan URL fotonya.
+
+Cara menjalankan:
+
+```
+mvn clean spring-boot:run
+```
+
+Perhatikan log filenya untuk mendapatkan port dimana dia berjalan (karena portnya diset random). Cari baris seperti ini di log
+
+```
+Updating port to 58255
+```
+
+Beberapa endpoint yang tersedia:
+
+* daftar produk : `http://localhost:58255/product`
+* foto produk : `http://localhost:58255/product/p001/photos`
+
+Ganti `58255` dengan nilai port yang didapatkan dari logfile. Ganti `p001` dengan id produk yang tersedia.
 
 ## Referensi ##
 
