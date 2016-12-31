@@ -3,6 +3,7 @@ spring:
         name: catalog
     cloud:
         config:
+            failFast: true
             discovery:
                 enabled: true
                 serviceId: configsvr
