@@ -1,4 +1,4 @@
-package com.muhardin.endy.belajar.springcloud;
+package com.muhardin.endy.belajar.springcloud.catalog;
 
 import java.util.Date;
 import java.util.HashMap;
