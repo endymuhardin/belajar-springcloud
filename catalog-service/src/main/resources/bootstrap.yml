@@ -5,7 +5,7 @@ spring:
         config:
             discovery:
                 enabled: true
-                serviceId: config
+                serviceId: configsvr
 #    profiles:
 #        active: testing
 

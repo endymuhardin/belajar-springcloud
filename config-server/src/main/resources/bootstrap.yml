@@ -1,0 +1,12 @@
+spring:
+    application:
+        name: configsvr
+    cloud:
+        config:
+            server:
+                bootstrap: true
+                git:
+                    uri: https://github.com/endymuhardin/belajar-springcloud.git
+                    searchPaths: 'config, config/{application}'
+                    cloneOnStart: true
+                    basedir: 'target/config'
