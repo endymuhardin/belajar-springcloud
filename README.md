@@ -45,6 +45,9 @@ Urutan deployment:
 4. Authentication Service
 5. API Gateway : pintu masuk untuk seluruh backend services
 
+Kecuali `discovery-service`, semua service lain bisa dijalankan berbarengan berkali-kali untuk mendapatkan clustering/multiple instance. Misalnya, bila kita jalankan `catalog-service` di dua console secara berbarengan, kita akan mendapatkan 2 instance `catalog-service` yang bisa melayani request secara bergantian. Ini disebut dengan replication atau clustering.
+
+Khusus `discovery-service`, replikasinya tidak otomatis, karena sesama `discovery-service` harus tau persis lokasi (host dan port) temannya.
 
 ## Discovery Service ##
 
