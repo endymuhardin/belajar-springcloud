@@ -74,40 +74,6 @@ Dan berikut perintah untuk menjalankan instance kedua:
 
 Setelah keduanya jalan, kita bisa lihat service mana saja yang terdaftar dengan mengakses ke `http://localhost:10001/`
 
-## Catalog Service ##
-
-Pada saat dijalankan, aplikasi ini:
-
-1. Menghubungi `discovery service` untuk mendaftarkan diri dan mencari `config server`
-2. Menghubungi `config server` untuk mendapatkan konfigurasi
-3. Barulah menjalankan diri sendiri
-
-Untuk menjalankan aplikasi ini, tidak ada yang istimewa, langsung saja
-
-        mvn clean spring-boot:run
-
-Kemudian browse ke `http://localhost:30001/halo`. Kita akan mendapatkan output sebagai berikut:
-
-```js
-{
-  "nama" : "Development User",
-  "waktu" : "Fri Dec 30 00:41:00 WIB 2016"
-}
-```
-
-Untuk mengetes apakah konfigurasi berjalan sempurna, kita bisa coba jalankan profile `testing` dengan cara mengeset environment variable `SPRING_PROFILES_ACTIVE` seperti ini
-
-        SPRING_PROFILES_ACTIVE=testing mvn clean spring-boot:run
-
-Harusnya `catalog service` akan menjalankan konfigurasi profile `testing` sehingga variabel `nama` akan berisi `Test User` seperti ini
-
-```js
-{
-  "nama" : "Test User",
-  "waktu" : "Fri Dec 30 00:43:47 WIB 2016"
-}
-```
-
 ## Config Server ##
 
 Cara menjalankan:
@@ -194,11 +160,17 @@ Cara menjalankan:
 
 Berisi REST API untuk mendapatkan daftar produk dan URL fotonya.
 
-Cara menjalankan:
 
-```
-mvn clean spring-boot:run
-```
+Pada saat dijalankan, aplikasi ini:
+
+1. Menghubungi `discovery service` untuk mendaftarkan diri dan mencari `config server`
+2. Menghubungi `config server` untuk mendapatkan konfigurasi
+3. Barulah menjalankan diri sendiri
+
+Untuk menjalankan aplikasi ini, tidak ada yang istimewa, langsung saja
+
+        mvn clean spring-boot:run
+
 
 Perhatikan log filenya untuk mendapatkan port dimana dia berjalan (karena portnya diset random). Cari baris seperti ini di log
 
@@ -206,7 +178,29 @@ Perhatikan log filenya untuk mendapatkan port dimana dia berjalan (karena portny
 Updating port to 58255
 ```
 
-Beberapa endpoint yang tersedia:
+Kemudian browse ke `http://localhost:58255/halo`. Kita akan mendapatkan output sebagai berikut:
+
+```js
+{
+  "nama" : "Development User",
+  "waktu" : "Fri Dec 30 00:41:00 WIB 2016"
+}
+```
+
+Untuk mengetes apakah konfigurasi berjalan sempurna, kita bisa coba jalankan profile `testing` dengan cara mengeset environment variable `SPRING_PROFILES_ACTIVE` seperti ini
+
+        SPRING_PROFILES_ACTIVE=testing mvn clean spring-boot:run
+
+Harusnya `catalog service` akan menjalankan konfigurasi profile `testing` sehingga variabel `nama` akan berisi `Test User` seperti ini
+
+```js
+{
+  "nama" : "Test User",
+  "waktu" : "Fri Dec 30 00:43:47 WIB 2016"
+}
+```
+
+Beberapa endpoint lain yang tersedia:
 
 * daftar produk : `http://localhost:58255/product`
 * foto produk : `http://localhost:58255/product/p001/photos`
