@@ -1,3 +1,9 @@
 # Harusnya diset sebagai environment variabel ENCRYPT_KEY
 # encrypt:
 #    key: inisymmetrickeyrahasiasekali
+---
+spring:
+    profiles: heroku
+eureka:
+    instance:
+        hostname: belajar-springcloud-configsvr.herokuapp.com
