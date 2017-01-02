@@ -21,3 +21,25 @@ eureka:
     client:
         serviceUrl:
             defaultZone: http://localhost:10001/eureka/
+
+---
+spring:
+    profiles: heroku-discovery1
+eureka:
+    instance:
+        hostname: belajar-springcloud-discovery1.herokuapp.com
+        nonSecurePort: 80
+    client:
+        serviceUrl:
+            defaultZone: https://belajar-springcloud-discovery2.herokuapp.com/eureka/
+
+---
+spring:
+    profiles: heroku-discovery2
+eureka:
+    instance:
+        hostname: belajar-springcloud-discovery2.herokuapp.com
+        nonSecurePort: 80
+    client:
+        serviceUrl:
+            defaultZone: https://belajar-springcloud-discovery1.herokuapp.com/eureka/
