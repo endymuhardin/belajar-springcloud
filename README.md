@@ -74,6 +74,36 @@ Dan berikut perintah untuk menjalankan instance kedua:
 
 Setelah keduanya jalan, kita bisa lihat service mana saja yang terdaftar dengan mengakses ke `http://localhost:10001/`
 
+### Deployment ke Heroku ###
+
+Berikut adalah rangkaian perintah untuk mendeploy aplikasi `discovery-service` ke Heroku. Semua perintah dijalankan di command line dalam folder hasil clone repo ini.
+
+```
+heroku apps:create --remote heroku-discovery1 --region us belajar-springcloud-discovery1
+heroku config:set SPRING_PROFILES_ACTIVE=heroku-discovery1  --remote heroku-discovery1
+git subtree push --prefix discovery-service heroku-discovery1 master
+```
+
+Bila terjadi kesalahan dan ingin redeploy, cara termudah adalah dengan cara menghapus dulu aplikasinya di Heroku dengan perintah berikut
+
+```
+heroku apps:destroy --remote heroku-discovery1 --confirm belajar-springcloud-discovery1
+```
+
+Khusus untuk `discovery-service`, kita perlu mendeploy replikasinya. Berikut perintahnya
+
+```
+heroku apps:create --remote heroku-discovery2 --region eu belajar-springcloud-discovery2
+heroku config:set SPRING_PROFILES_ACTIVE=heroku-discovery2  --remote heroku-discovery2
+git subtree push --prefix discovery-service heroku-discovery2 master
+```
+
+Bila terjadi kesalahan dan ingin redeploy hasil replikasi ini, cara termudah adalah dengan cara menghapus dulu aplikasinya di Heroku dengan perintah berikut
+
+```
+heroku apps:destroy --remote heroku-discovery2 --confirm belajar-springcloud-discovery2
+```
+
 ## Config Server ##
 
 Cara menjalankan:
@@ -156,6 +186,22 @@ Cara menjalankan:
 
         password: {cipher}59e78e6f57c36a0e2347cf1f68ae7772594e1f77b3cb2bb358baf447cd304eda
 
+### Deployment ke Heroku ###
+
+Berikut adalah rangkaian perintah untuk mendeploy aplikasi `config-server` ke Heroku. Semua perintah dijalankan di command line dalam folder hasil clone repo ini.
+
+```
+heroku apps:create --remote heroku-configsvr --region us belajar-springcloud-configsvr
+heroku config:set SPRING_PROFILES_ACTIVE=heroku --remote heroku-configsvr
+git subtree push --prefix config-server heroku-configsvr master
+```
+
+Bila terjadi kesalahan dan ingin redeploy, cara termudah adalah dengan cara menghapus dulu aplikasinya di Heroku dengan perintah berikut
+
+```
+heroku apps:destroy --remote heroku-configsvr --confirm belajar-springcloud-configsvr
+```
+
 ## Catalog Service ##
 
 Berisi REST API untuk mendapatkan daftar produk dan URL fotonya.
@@ -207,6 +253,23 @@ Beberapa endpoint lain yang tersedia:
 
 Ganti `58255` dengan nilai port yang didapatkan dari logfile. Ganti `p001` dengan id produk yang tersedia.
 
+### Deployment ke Heroku ###
+
+Berikut adalah rangkaian perintah untuk mendeploy aplikasi `catalog-service` ke Heroku. Semua perintah dijalankan di command line dalam folder hasil clone repo ini.
+
+```
+heroku apps:create --remote heroku-catalog --region us belajar-springcloud-catalog
+heroku config:set SPRING_PROFILES_ACTIVE=heroku --remote heroku-catalog
+git subtree push --prefix catalog-service heroku-catalog master
+```
+
+Bila terjadi kesalahan dan ingin redeploy, cara termudah adalah dengan cara menghapus dulu aplikasinya di Heroku dengan perintah berikut
+
+```
+heroku apps:destroy --remote heroku-catalog --confirm belajar-springcloud-catalog
+```
+
+
 ## Referensi ##
 
 * http://www.kennybastani.com/2016/04/event-sourcing-microservices-spring-cloud.html
@@ -214,3 +277,4 @@ Ganti `58255` dengan nilai port yang didapatkan dari logfile. Ganti `p001` denga
 * https://www.youtube.com/watch?v=5q8B6lYhFvE
 * http://www.baeldung.com/spring-cloud-netflix-eureka
 * http://www.todaysoftmag.com/article/1429/micro-service-discovery-using-netflix-eureka
+* https://blog.heroku.com/managing_your_microservices_on_heroku_with_netflix_s_eureka
