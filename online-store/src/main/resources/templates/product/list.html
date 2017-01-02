@@ -6,6 +6,25 @@
     <body>
         <div layout:fragment="content">
             <h1>Daftar Produk</h1>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Kode Produk</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="row : ${daftarProduk}">
+                        <th scope="row" th:text="${row.code}">P-001</th>
+                        <td th:text="${row.name}">Produk 001</td>
+                        <td th:text="${row.price}">Last Name</td>
+                        <td><a href="#">edit</a></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>
