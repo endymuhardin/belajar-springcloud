@@ -8,3 +8,9 @@ spring:
         properties:
             hibernate:
                 format_sql: true
+---
+spring:
+    profiles: heroku
+eureka:
+    instance:
+        hostname: belajar-springcloud-catalog.herokuapp.com
