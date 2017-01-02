@@ -20,7 +20,7 @@ public class ProductController {
     public ModelMap semuaProduk(Pageable page){
         Integer pageNumber = page.getPageNumber();
         Integer pageSize = page.getPageSize();
-        Page<Product> hasil = catalogServiceClient.semuaProduct(pageNumber, pageSize);
+        Page<Product> hasil = catalogServiceClient.semuaProduct(page);
         System.out.println("Jumlah data : "+hasil.getTotalElements());
         return new ModelMap("daftarProduk", hasil);
     }
