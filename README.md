@@ -194,7 +194,7 @@ Berikut adalah rangkaian perintah untuk mendeploy aplikasi `config-server` ke He
 
 ```
 heroku apps:create --remote heroku-configsvr --region us belajar-springcloud-configsvr
-heroku config:set SPRING_PROFILES_ACTIVE=heroku --remote heroku-configsvr
+heroku config:set ENCRYPT_KEY=inisymmetrickeyrahasiasekali --remote heroku-configsvr
 git subtree push --prefix config-server heroku-configsvr master
 ```
 
@@ -261,7 +261,6 @@ Berikut adalah rangkaian perintah untuk mendeploy aplikasi `catalog-service` ke 
 
 ```
 heroku apps:create --remote heroku-catalog --region us belajar-springcloud-catalog
-heroku config:set SPRING_PROFILES_ACTIVE=heroku --remote heroku-catalog
 git subtree push --prefix catalog-service heroku-catalog master
 ```
 
@@ -301,7 +300,6 @@ Berikut adalah rangkaian perintah untuk mendeploy aplikasi `image-service` ke He
 
 ```
 heroku apps:create --remote heroku-image --region us belajar-springcloud-image
-heroku config:set SPRING_PROFILES_ACTIVE=heroku --remote heroku-image
 git subtree push --prefix image-service heroku-image master
 ```
 
@@ -339,7 +337,6 @@ Berikut adalah rangkaian perintah untuk mendeploy aplikasi `online-store` ke Her
 
 ```
 heroku apps:create --remote heroku-olstore --region us belajar-springcloud-olstore
-heroku config:set SPRING_PROFILES_ACTIVE=heroku --remote heroku-olstore
 git subtree push --prefix online-store heroku-olstore master
 ```
 
@@ -376,7 +373,6 @@ Berikut adalah rangkaian perintah untuk mendeploy aplikasi `api-gateway` ke Hero
 
 ```
 heroku apps:create --remote heroku-apigw --region us belajar-springcloud-apigw
-heroku config:set SPRING_PROFILES_ACTIVE=heroku --remote heroku-apigw
 git subtree push --prefix api-gateway heroku-apigw master
 ```
 
