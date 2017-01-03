@@ -17,6 +17,8 @@ eureka:
 spring:
     profiles: heroku
 eureka:
+    instance:
+        hostname: belajar-springcloud-image.herokuapp.com
     client:
         serviceUrl:
             defaultZone: https://belajar-springcloud-discovery1.herokuapp.com/eureka/,https://belajar-springcloud-discovery2.herokuapp.com/eureka/
