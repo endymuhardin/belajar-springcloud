@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+    <head>
+        <title>Detail Produk</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <h1>Detail Produk</h1>
+
+            <div class="container">
+                <ul th:if="${product}">
+                    <li th:text="${product.code}">Kode Produk</li>
+                    <li th:text="${product.name}">Nama Produk</li>
+                    <li th:text="${product.price}">Harga</li>
+                    <li><img th:src="@{/img} + ${product.thumbnail}" height="20"/></li>
+                    <li th:each="f : ${daftarFoto} ">
+                        <img th:src="@{/img} + ${f.url}" 
+                             th:title="${f.caption}"
+                             th:alt="${f.caption}"/>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

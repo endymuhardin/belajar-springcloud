@@ -25,7 +25,7 @@
                         <td th:text="${row.price}">Last Name</td>
                         <td th:text="${row.slug}">Permalink</td>
                         <td><img th:src="@{/img} + ${row.thumbnail}" height="20"/></td>
-                        <td><a href="#">edit</a></td>
+                        <td><a href="#" th:href="@{/}+${row.slug}">detail</a></td>
                     </tr>
                 </tbody>
             </table>
