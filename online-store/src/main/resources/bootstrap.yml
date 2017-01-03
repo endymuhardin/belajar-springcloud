@@ -7,8 +7,6 @@ spring:
             discovery:
                 enabled: true
                 serviceId: configsvr
-#    profiles:
-#        active: testing
 
 eureka:
     client:
