@@ -32,7 +32,16 @@ public class Product {
     
     @NotNull @NotEmpty
     @Size(max = 255)
+    @Column(unique = true)
+    private String slug;
+    
+    @NotNull @NotEmpty
+    @Size(max = 255)
     private String name;
+    
+    @NotNull @NotEmpty
+    @Size(max = 255)
+    private String thumbnail;
     
     @NotNull
     @Min(0)
@@ -77,5 +86,22 @@ public class Product {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+    
     
 }

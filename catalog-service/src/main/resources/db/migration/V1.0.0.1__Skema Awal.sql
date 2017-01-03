@@ -13,10 +13,13 @@ create table products (
   id varchar(36),
   id_merchant varchar(36) not null,
   code varchar(10) not null,
+  slug varchar(255) not null,
   name varchar(255) not null,
+  thumbnail varchar(255) not null,
   price number(19,2) not null,
   primary key (id),
   unique (code),
+  unique (slug),
   foreign key (id_merchant) references merchants(id)
 );
 

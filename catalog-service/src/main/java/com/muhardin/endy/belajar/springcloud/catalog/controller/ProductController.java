@@ -5,6 +5,7 @@ import com.muhardin.endy.belajar.springcloud.catalog.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,5 +17,10 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET,value = "/product")
     public Page<Product> semuaProduct(Pageable page){
         return productDao.findAll(page);
+    }
+    
+    @RequestMapping(method = RequestMethod.GET,value = "/{slug}")
+    public Product productBySlug(@PathVariable String slug){
+        return productDao.findBySlug(slug);
     }
 }
