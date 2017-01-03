@@ -32,6 +32,6 @@ public class ProductController {
             System.out.println("Jumlah foto  : " +photos.size());
             mm.addAttribute("daftarFoto", photos);
         }
-        return "/product/detail";
+        return "product/detail";
     }
 }
