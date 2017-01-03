@@ -13,6 +13,8 @@
                         <th><a class="sorted" sd:pagination-sort="code" >Kode Produk</a></th>
                         <th><a class="sorted" sd:pagination-sort="name" >Nama Produk</a></th>
                         <th>Harga</th>
+                        <th>Permalink</th>
+                        <th>Thumbnail</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -21,6 +23,8 @@
                         <th scope="row" th:text="${row.code}">P-001</th>
                         <td th:text="${row.name}">Produk 001</td>
                         <td th:text="${row.price}">Last Name</td>
+                        <td th:text="${row.slug}">Permalink</td>
+                        <td><img th:src="@{/img} + ${row.thumbnail}" height="20"/></td>
                         <td><a href="#">edit</a></td>
                     </tr>
                 </tbody>
