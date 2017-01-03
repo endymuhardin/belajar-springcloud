@@ -1,0 +1,6 @@
+zuul:
+    ignoredServices: '*'
+    routes:
+        image: /img/**
+        catalog: /catalog/**
+        onlinestore: /**
