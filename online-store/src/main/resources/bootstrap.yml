@@ -14,3 +14,11 @@ eureka:
     client:
         serviceUrl:
             defaultZone: http://localhost:10001/eureka/,http://localhost:10002/eureka/
+            
+---
+spring:
+    profiles: heroku
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: https://belajar-springcloud-discovery1.herokuapp.com/eureka/,https://belajar-springcloud-discovery2.herokuapp.com/eureka/
