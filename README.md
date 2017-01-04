@@ -498,3 +498,4 @@ OAuth
 
 * https://spring.io/guides/tutorials/spring-security-and-angular-js/
 * http://stytex.de/blog/2016/02/01/spring-cloud-security-with-oauth2/
+* https://github.com/spring-guides/tut-spring-security-and-angular-js/tree/master/oauth2
