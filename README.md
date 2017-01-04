@@ -486,6 +486,7 @@ The Big Picture
 * http://www.kennybastani.com/2016/04/event-sourcing-microservices-spring-cloud.html
 * https://www.youtube.com/watch?v=cCEvFDhe3os
 * https://www.youtube.com/watch?v=5q8B6lYhFvE
+* https://programmaticponderings.com/2016/02/15/diving-deeper-into-getting-started-with-spring-cloud/
 
 Discovery Service
 
