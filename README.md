@@ -382,12 +382,118 @@ Bila terjadi kesalahan dan ingin redeploy, cara termudah adalah dengan cara meng
 heroku apps:destroy --remote heroku-apigw --confirm belajar-springcloud-apigw
 ```
 
+## Auth Service ##
+
+Security pada aplikasi ini akan menggunakan protokol OAuth 2.0 dengan format token JWT. Untuk itu, kita perlu membuat keystore dulu untuk menyimpan private key dan public key. Berikut perintah untuk membuatnya
+
+```
+keytool -genkeypair -alias jwt -keyalg RSA -dname "CN=Endy Muhardin, OU=Belajar Microservices, O=ArtiVisi, L=Jakarta, ST=Jakarta, C=ID" -keypass rahasia -keystore src/main/resources/jwt.jks -storepass rahasia
+```
+
+Kemudian, kita perlu mengeluarkan public key dari keystore tersebut untuk dipasang di semua service lainnya. Berikut perintahnya
+
+```
+keytool -list -rfc --keystore src/main/resources/jwt.jks | openssl x509 -inform pem -pubkey
+```
+
+Contoh outputnya seperti ini
+
+```
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuZzI5JJClLD69mLAQRlg
+cVT6pDL1SoiAngZW8wDcELPDXTSYfhy00N7H+b6X+qpZRMzaLikzcp/qDRtCMIlB
+QzyWKq3nPlSu98MEhEvCb7Q8S/4OQLhR0RYn4oPsvMx6KBh+UdJBukBqi6U5/Ew1
+H93zd7S6VfzmlLFzLTnbSUfKeB9g2IdVqU1x2Sehxx93TnMcC/RpODy0e0cbetzV
+/PG2zI2JHUTZylb5PMNZQm5cfFtUIb/bgH9nAXYxhLXKqbyplDGh/uIgayZfrStR
+CI2sB/w0HCqf6VSf0JBR4m1r7Mr4Pr7SZcyIjYz36CULYw89yht2N5NicqckYdYO
+gQIDAQAB
+-----END PUBLIC KEY-----
+-----BEGIN CERTIFICATE-----
+MIIDlzCCAn+gAwIBAgIEA3MB8jANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJJ
+RDEQMA4GA1UECBMHSmFrYXJ0YTEQMA4GA1UEBxMHSmFrYXJ0YTERMA8GA1UEChMI
+QXJ0aVZpc2kxHjAcBgNVBAsTFUJlbGFqYXIgTWljcm9zZXJ2aWNlczEWMBQGA1UE
+AxMNRW5keSBNdWhhcmRpbjAeFw0xNzAxMDQwNDI3NTRaFw0xNzA0MDQwNDI3NTRa
+MHwxCzAJBgNVBAYTAklEMRAwDgYDVQQIEwdKYWthcnRhMRAwDgYDVQQHEwdKYWth
+cnRhMREwDwYDVQQKEwhBcnRpVmlzaTEeMBwGA1UECxMVQmVsYWphciBNaWNyb3Nl
+cnZpY2VzMRYwFAYDVQQDEw1FbmR5IE11aGFyZGluMIIBIjANBgkqhkiG9w0BAQEF
+AAOCAQ8AMIIBCgKCAQEAuZzI5JJClLD69mLAQRlgcVT6pDL1SoiAngZW8wDcELPD
+XTSYfhy00N7H+b6X+qpZRMzaLikzcp/qDRtCMIlBQzyWKq3nPlSu98MEhEvCb7Q8
+S/4OQLhR0RYn4oPsvMx6KBh+UdJBukBqi6U5/Ew1H93zd7S6VfzmlLFzLTnbSUfK
+eB9g2IdVqU1x2Sehxx93TnMcC/RpODy0e0cbetzV/PG2zI2JHUTZylb5PMNZQm5c
+fFtUIb/bgH9nAXYxhLXKqbyplDGh/uIgayZfrStRCI2sB/w0HCqf6VSf0JBR4m1r
+7Mr4Pr7SZcyIjYz36CULYw89yht2N5NicqckYdYOgQIDAQABoyEwHzAdBgNVHQ4E
+FgQUrM7LKWO3aPV6Av+eEbWuUdsJrk0wDQYJKoZIhvcNAQELBQADggEBABGa4B9W
+lVoRRNfu1hMW2/2N30zCJuBP2upLy1ukZwIsnWt0brNI9WqB1JStuEJSpKSkCDLZ
+uwomG8QDGr4ur9qER4WMst4ZXx1XYjQ/Yhm5lCHcLr/cLTQs+LHbEZ4G2UFq5/th
+wr55EEfMcmwfNA7Rt7IRRUDjxrDGjHd8v+HwZzXwjkbeGzQ9UB26OMIjeGOSazT0
+hLZXNI8kXFJr7XIgOFXiQA2EcUj2g3tSvYw6K0WOZe4vv2iQq+oRx4dDmJJQsP3X
+cIZ5RkDMp0II1NblONrcl48PCiv/0n2wjkRLTtz0zKMsAXNVRh+gvcNr0QyDkLvP
+HMl7Vjn2hTXCFcI=
+-----END CERTIFICATE-----
+```
+
+Kita cukup ambil bagian public keynya saja, yaitu
+
+```
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuZzI5JJClLD69mLAQRlg
+cVT6pDL1SoiAngZW8wDcELPDXTSYfhy00N7H+b6X+qpZRMzaLikzcp/qDRtCMIlB
+QzyWKq3nPlSu98MEhEvCb7Q8S/4OQLhR0RYn4oPsvMx6KBh+UdJBukBqi6U5/Ew1
+H93zd7S6VfzmlLFzLTnbSUfKeB9g2IdVqU1x2Sehxx93TnMcC/RpODy0e0cbetzV
+/PG2zI2JHUTZylb5PMNZQm5cfFtUIb/bgH9nAXYxhLXKqbyplDGh/uIgayZfrStR
+CI2sB/w0HCqf6VSf0JBR4m1r7Mr4Pr7SZcyIjYz36CULYw89yht2N5NicqckYdYO
+gQIDAQAB
+-----END PUBLIC KEY-----
+```
+
+Aplikasi `auth-server` ini dijalankan seperti biasa, menggunakan perintah
+
+```
+mvn clean spring-boot:run
+```
+
+Untuk mengetes link login, browse ke `http://localhost:50237/oauth/authorize?client_id=onlinestore&response_type=code&redirect_uri=http://example.com`
+
+Pastikan ganti portnya sesuai yang muncul di log. Kita akan mendapatkan halaman login. Isikan username/password sesuai yang sudah dihardcode di class `KonfigurasiSecurity`.
+
+Selanjutnya, kita akan diredirect ke `http://example.com/?code=iT30S8`. Ambil code dan tukarkan dengan access_token dengan perintah berikut:
+
+```
+curl -X POST -vu onlinestore:123456 http://localhost:50237/oauth/token -H "Accept: application/json" -d "grant_type=authorization_code&code=iT30S8&redirect_uri=http://example.com"
+```
+
+Seharusnya kita akan mendapatkan access token sebagai berikut:
+
+```js
+{
+  "access_token" : "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYmVsYWphcnNwcmluZ2Nsb3VkIl0sInVzZXJfbmFtZSI6ImVuZHkiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiZXhwIjoxNDgzNTQ4MjgwLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IjdhMGNlNzVjLWMzZWItNDFjMy04NzY0LWQ2MmMwMWRiMDQ4MyIsImNsaWVudF9pZCI6Im9ubGluZXN0b3JlIn0.ds1fVItcI9xJY4jM2uFQ_vf9KnhMayj-vZ7peJ0ZcedicylCi2zExblThQ788-2ZC0boCpeTppWS5j4tPsqoR_TRduTjL-r0VC5tlWK9YOarlr4Kyu0xfI9_6U5mLl1RoHs_VnIBJIOliOjOKbj2CNBOj2UMgDzPNuPxrblCqJ28_J9OrBdyHC0Z9sfOSeM7HIyx44-pSNZi4U9jbrnStpnB_iBCafmjbRUUaZ4_YpNp-uAPJKPd-bAMOPtJb2APlSWmbyj1Ay881cU9PS4KoPOMm-dzcPef2uu6tLzWGKkMse9rFPOwslUtuBuxJ8QPE3z0M8d2MQiI9skJr1FtiQ",
+  "token_type" : "bearer",
+  "refresh_token" : "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYmVsYWphcnNwcmluZ2Nsb3VkIl0sInVzZXJfbmFtZSI6ImVuZHkiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXSwiYXRpIjoiN2EwY2U3NWMtYzNlYi00MWMzLTg3NjQtZDYyYzAxZGIwNDgzIiwiZXhwIjoxNDg2MDk3MDgwLCJhdXRob3JpdGllcyI6WyJST0xFX0FETUlOIl0sImp0aSI6IjBmZTlmNWNkLWQxODktNDQwYi05NTI5LTdlOThjYjk3Nzg1YyIsImNsaWVudF9pZCI6Im9ubGluZXN0b3JlIn0.MBCvkWQP9imbs0Q2W_bDgAFa1CbWvXD0Zb2XmycFXPRKF19qEvkTj8wIjpCtWnpVa2YruP5gLfv_kIILUJFycf1WcHhhRy3pErA8x8lcUN1a_ty3LSrudPdyy7i1U2oGKzHO3cadDYWAQt2CesbLleXGKbZNeUJHS30IeKH0sZumMTKKv_YuTPaol3qwi3rmHfs4HRH1ANPpv5h8_EFzMVfwjnUFxm_pKNSt3YZj2jpa3u8eJWASePYGpIxcnfvxgOC-6V9-FNJGNSB70Eq6qD8YOFsVN0FSVE1Z_JdXMOC4JM37HNn6inecaAe0fDO81Y8HjgCcthhyMHngWWEBuw",
+  "expires_in" : 43199,
+  "scope" : "read write",
+  "jti" : "7a0ce75c-c3eb-41c3-8764-d62c01db0483"
+}
+```
+
+Kita bisa copy-paste nilai `access_token` pada response di atas ke website [https://jwt.io](https://jwt.io/) untuk mengetahui isinya.
+
+![Decoding JWT Token](catatan/img/jwt-decoded.png)
 
 ## Referensi ##
+
+The Big Picture
 
 * http://www.kennybastani.com/2016/04/event-sourcing-microservices-spring-cloud.html
 * https://www.youtube.com/watch?v=cCEvFDhe3os
 * https://www.youtube.com/watch?v=5q8B6lYhFvE
+
+Discovery Service
+
 * http://www.baeldung.com/spring-cloud-netflix-eureka
 * http://www.todaysoftmag.com/article/1429/micro-service-discovery-using-netflix-eureka
 * https://blog.heroku.com/managing_your_microservices_on_heroku_with_netflix_s_eureka
+
+OAuth
+
+* https://spring.io/guides/tutorials/spring-security-and-angular-js/
+* http://stytex.de/blog/2016/02/01/spring-cloud-security-with-oauth2/
