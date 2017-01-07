@@ -1,6 +1,14 @@
+server:
+    port: 10000
 zuul:
     ignoredServices: '*'
     routes:
         image: /img/**
         catalog: /catalog/**
         onlinestore: /**
+
+---
+spring:
+    profiles: heroku
+server:
+    port: ${PORT:0}
