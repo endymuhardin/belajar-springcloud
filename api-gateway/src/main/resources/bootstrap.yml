@@ -13,19 +13,6 @@ eureka:
         serviceUrl:
             defaultZone: http://localhost:10001/eureka/,http://localhost:10002/eureka/
 
-security:
-    user:
-        password: none
-    oauth2:
-        client:
-            accessTokenUri: http://localhost:10003/user/oauth/token
-            userAuthorizationUri: http://localhost:10003/user/oauth/authorize
-            clientId: onlinestore
-            clientSecret: 123456
-        resource:
-            jwt:
-                keyUri: http://localhost:10003/user/oauth/token_key
-
 ---
 spring:
     profiles: heroku
