@@ -64,7 +64,9 @@ public class KonfigurasiSecurity extends WebSecurityConfigurerAdapter {
 
         @Override
         public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-            oauthServer.checkTokenAccess("hasRole('CLIENT')");
+            oauthServer
+                    .tokenKeyAccess("permitAll()")
+                    .checkTokenAccess("hasRole('CLIENT')");
         }
 
         @Override
