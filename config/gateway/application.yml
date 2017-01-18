@@ -12,13 +12,13 @@ security:
         password: none
     oauth2:
         client:
-            accessTokenUri: http://authserver:10003/oauth/token
-            userAuthorizationUri: http://authserver:10003/oauth/authorize
+            accessTokenUri: http://localhost:10003/oauth/token
+            userAuthorizationUri: http://localhost:10003/oauth/authorize
             clientId: onlinestore
             clientSecret: 123456
         resource:
             jwt:
-                keyUri: http://authserver:10003/oauth/token_key
+                keyUri: http://localhost:10003/oauth/token_key
 
 ---
 spring:
