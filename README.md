@@ -123,7 +123,7 @@ Cara menjalankan:
         curl http://localhost:8888/catalog/testing
 
 4. Periksa outputnya, seharusnya seperti ini
-        
+
         {
           "name" : "catalog",
           "profiles" : [ "testing" ],
@@ -182,7 +182,7 @@ Cara menjalankan:
 
    dan mendapatkan hasil seperti ini
 
-        59e78e6f57c36a0e2347cf1f68ae7772594e1f77b3cb2bb358baf447cd304eda 
+        59e78e6f57c36a0e2347cf1f68ae7772594e1f77b3cb2bb358baf447cd304eda
 
 10. Nilai tersebut bisa kita pasang di file konfigurasi seperti ini
 
@@ -478,6 +478,54 @@ Seharusnya kita akan mendapatkan access token sebagai berikut:
 Kita bisa copy-paste nilai `access_token` pada response di atas ke website [https://jwt.io](https://jwt.io/) untuk mengetahui isinya.
 
 ![Decoding JWT Token](catatan/img/jwt-decoded.png)
+
+### Catatan tentang cookie ###
+
+Bila kita jalankan `auth-server` ini dengan aplikasi lain yang menggunakannya untuk security (misal sebagai SSO Client atau Resource Server) di host yang sama, perlu ada perhatian khusus tentang cookie.
+
+Aplikasi `auth-server` dan aplikasi lain menggunakan cookie sebagai penanda session, biasanya bernama `JSESSIONID` seperti layaknya aplikasi web berbasis Java pada umumnya. Cookie ini diset menggunakan hostname dan contextPath, tidak menggunakan port.
+
+[![Cookie JSESSIONID](catatan/img/nama-cookie-default.png)](catatan/img/nama-cookie-default.png)
+
+Dengan demikian, apabila kedua aplikasi dijalankan di host yang sama (misalnya di `localhost`), maka keduanya akan berusaha memasang cookie bernama `JSESSIONID` dengan contextPath `/` seperti bisa dilihat pada screenshot berikut. Pertama, kita lihat cookie aplikasi `auth-server` yang berjalan di port 10003.
+
+[![Cookie Auth Server](catatan/img/cookie-auth-server.png)](catatan/img/cookie-auth-server.png)
+
+Begitu kita selesai login, akan diredirect ke aplikasi `api-gateway` di port 10000. Aplikasi `api-gateway` terlihat tidak bisa memproses `authorization_code` yang didapatkan untuk melakukan single-sign-on. Hasilnya akan tampak seperti ini.
+
+[![Cookie API Gateway](catatan/img/cookie-api-gateway.png)](catatan/img/cookie-api-gateway.png)
+
+Kalau kita perhatikan di tab cookie, kita akan lihat bahwa cookie yang diset sama persis konfigurasinya seperti milik `auth-server` tadi. Bedanya cuma isinya saja. Bila kita ulangi proses login beberapa kali, kita akan melihat nilainya berubah-ubah terus. Ini disebabkan karena aplikasi berusaha mencari `JSESSIONID` yang ada dalam cookie, tidak berhasil menemukan, kemudian memasang `JSESSIONID` baru.
+
+Agar aplikasi `auth-server` dan `api-gateway` tidak saling menimpa cookie, ada 3 alternatif yaitu:
+
+* mengganti `contextPath` salah satu aplikasi dengan konfigurasi seperti ini
+
+    ```yaml
+    server:
+        contextPath:/auth
+    ```
+
+* mengganti hostname salah satu aplikasi, misalnya dari `http://localhost:10003` menjadi `http://authserver:10003`. Perubahan ini dilakukan dengan cara menambahkan konfigurasi di `/etc/hosts` seperti ini
+
+    ```
+    127.0.0.1       authserver
+    ```
+
+* mengganti nama cookie, jangan pakai nama default `JSESSIONID`. Konfigurasinya seperti ini
+
+    ```yaml
+    server:
+        session:
+            cookie:
+                name:AUTHSERVER
+    ```
+
+Dari ketiga alternatif ini, biasanya saya menggunakan alternatif ganti nama cookie, supaya tidak mengubah konfigurasi nama host ataupun `contextPath`. Hasilnya seperti ini.
+
+[![Ganti Nama Cookie](catatan/img/ganti-nama-cookie.png)](catatan/img/ganti-nama-cookie.png)
+
+Kita bisa lihat bahwa nama cookie berbeda sehingga masing-masing aplikasi bisa menggunakan `session id` masing-masing.
 
 ## Referensi ##
 
